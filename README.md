@@ -1,9 +1,9 @@
 # Rest Query Endpoint (Experiment)
-At the moment the Query Block uses the REST Api endpoints to fetch posts for the backend and WP_Query for frontend. The REST API is currently very limited.
-This is an experiment to provide the full power of WP_Query and WP_Term_Query for the Gutenberg Query Block.
+At the moment the Query Block uses the `REST API` endpoints to fetch posts for the backend and `WP_Query` for frontend. The `REST API` is currently very limited.
+This is an experiment to provide the full power of `WP_Query` and `WP_Term_Query` for the Gutenberg Query Block.
 
 ## Idea
-- The plugin registers a new REST-Endpoint `/wp/v2/query`. (Alternatives considered: wp/gutenberg/v1/query, wp-gutenberg/v1/query, wp-admin/v1/query as described over [here](https://make.wordpress.org/core/2020/01/31/rest-api-introduce-dashboard-namespace/))
+- The plugin registers a new REST-Endpoint `/wp/v2/query`. (Alternatives considered: `wp/gutenberg/v1/query`, `wp-gutenberg/v1/query`, `wp-admin/v1/query` as described over [here](https://make.wordpress.org/core/2020/01/31/rest-api-introduce-dashboard-namespace/))
 - The new endpoint accepts a JSON in the paramater `json` e. g. `https://query-endpoint.mariohamann.de/wp-json/wp/v2/query?json={}`.
 - The JSON can contain `query` (= query name as a string) and `args` (= args for Query as array)
 - The `args`can contain every paramter as described in [WP Query](https://developer.wordpress.org/reference/classes/wp_query/) and [WP_Term_Query](https://developer.wordpress.org/reference/classes/wp_term_query/) (as JSON istead of PHP args)
