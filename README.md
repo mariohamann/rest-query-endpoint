@@ -13,10 +13,10 @@ This is an experiment to provide the full power of WP_Query and WP_Term_Query fo
 The Query Block would work as a kind of "JSON-Builder". Its only job is to create a well formatted JSON which could be send to the query-Endpoint as parameter. The UI would have to follow the possibilities of WP Query and WP_Term_Query. Frontend and backend recieve exactly the same arguments and the same logic.
 
 ## Examples
-- Random post: https://query-endpoint.mariohamann.de/wp-json/wp/v2/query?json={"args":{"orderby":"rand","posts_per_page":"1"}}
-- Order posts by comments: https://query-endpoint.mariohamann.de/wp-json/wp/v2/query?json={"args":{"orderby":"comment_count","order":"ASC"}}
-- Show categories, ordered by count: https://query-endpoint.mariohamann.de/wp-json/wp/v2/query?json={"query":"WP_Term_Query","args":{"taxonomy":"category","orderby":"count","order":"DESC","hide_empty":false}}
-- Show pages: https://query-endpoint.mariohamann.de/wp-json/wp/v2/query?json={"args":{"post_type":"page"}}
+- **Random post** `{"args":{"orderby":"rand","posts_per_page":"1"}}`: https://query-endpoint.mariohamann.de/wp-json/wp/v2/query?json={"args":{"orderby":"rand","posts_per_page":"1"}}
+- **Order posts by comments** `{"args":{"orderby":"comment_count","order":"ASC"}}`: https://query-endpoint.mariohamann.de/wp-json/wp/v2/query?json={"args":{"orderby":"comment_count","order":"ASC"}}
+- **Show categories, ordered by count** `{"query":"WP_Term_Query","args":{"taxonomy":"category","orderby":"count","order":"DESC","hide_empty":false}}`: https://query-endpoint.mariohamann.de/wp-json/wp/v2/query?json={"query":"WP_Term_Query","args":{"taxonomy":"category","orderby":"count","order":"DESC","hide_empty":false}}
+- **Show page** `{"args":{"post_type":"page"}}`: https://query-endpoint.mariohamann.de/wp-json/wp/v2/query?json={"args":{"post_type":"page"}}
 
 ## Security issues
 This query can find EVERY post type and term, as long it is queryable, e. g. `nav_menu` & `page` work, `revision` and `attachment`not. 
