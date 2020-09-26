@@ -17,56 +17,54 @@ namespace MarioHamann\RestQueryEndpoint;
 if ( ! defined( 'ABSPATH' ) ) exit;
 /* Nach dieser Zeile den Code einfügen*/
 
-QueryEndpoint::get_instance();
 
-class QueryEndpoint {
-	public static function get_instance() {
-	static $instance = null;
-		if (is_null($instance)) {
-			$instance = new self();
-		}
-		return $instance;
-	}
+add_action( 'rest_api_init', __NAMESPACE__ . '\register_query_route');
 
-	private function __construct() {
-		add_action( 'rest_api_init', array($this, 'registerQueryRoute'));
-	}
+function register_query_route() {
 
-	public function registerQueryRoute() {
+	// Register endpoint
+	register_rest_route('wp/v2', '/query',
+		array(
+			'methods' => 'GET',
+			'callback' => function ($data) {
 
-		// Register endpoint
-		register_rest_route('wp/v2', '/query',
-			array(
-				'methods' => 'GET',
-				'callback' => function ($data) {
-					// Get JSON
-					$json = $data->get_param( 'json' ) ?? '';
-					$params = json_decode($json);
-
-					// Check if JSON is valid JSON
-					if (!(json_last_error() === JSON_ERROR_NONE)) {
-						return  __('ERROR: Malformed JSON.', 'wp');
-					}
-
-					// Set defaults
-					$query = $params->query ?? 'WP_Query';
-					$args = $params->args ?? array("post_type" => "post");
-					
-					// Create the Query
-					if($query === 'WP_Query'){
-						$query = new \WP_Query( $args );
-						$objects = $query->posts;
-					}
-					elseif($query === 'WP_Term_Query'){
-						$query = new \WP_Term_Query( $args );
-						$objects = $query->terms;
-					}
-					else{
-						return __('ERROR: Unknown Query.', 'wp');
-					}
-					return $objects;
+				// Check if JSON parameter is set
+				if($data->get_param( 'json' )){
+					$json = $data->get_param( 'json' );
 				}
-			)
-		);
-	}
+				else{
+					echo __('ERROR: You need a JSON parameter, e. g. ') . get_site_url() . '/wp-json/wp/v2/query?json={"query":"WP_Query","args":{"orderby":"name","order":"ASC"}}';
+					return;
+				}
+
+				// Devode JSON to PHP object
+				$params = json_decode($json);
+
+				// Check if JSON is valid JSON
+				if (!(json_last_error() === JSON_ERROR_NONE)) {
+					echo  __('ERROR: Malformed JSON.', 'wp');
+					return;
+				}
+
+				// Set defaults
+				$query = $params->query ?? 'WP_Query';
+				$args = $params->args ?? array("post_type" => "post");
+				
+				// Create the Query
+				if($query === 'WP_Query'){
+					$query = new \WP_Query( $args );
+					$objects = $query->posts;
+				}
+				elseif($query === 'WP_Term_Query'){
+					$query = new \WP_Term_Query( $args );
+					$objects = $query->terms;
+				}
+				else{
+					echo __('ERROR: Unknown Query.', 'wp');
+					return;
+				}
+				return $objects;
+			}
+		)
+	);
 }
