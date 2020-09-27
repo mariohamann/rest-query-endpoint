@@ -1,5 +1,5 @@
 # Rest Query Endpoint (Experiment)
-alall
+
 At the moment the Query Block uses the `REST API` endpoints to fetch posts for the backend and `WP_Query` for frontend. The `REST API` is currently very limited.
 This is an experiment to provide the full power of `WP_Query` and `WP_Term_Query` for the Gutenberg Query Block.
 
@@ -31,10 +31,10 @@ The Query Block could work as a kind of "JSON-Builder". Its job is to create a w
 
 ## Examples
 
-- **Random post** `{"args":{"orderby":"rand","posts_per_page":"1"}}`: [Demo using params in URL](https://query-endpoint.mariohamann.de/wp-json/wp/v2/query?json={"args":{"orderby":"rand","posts_per_page":"1"}})
-- **Order posts by comments** `{"args":{"orderby":"comment_count","order":"ASC"}}`: [Demo using params in URL](https://query-endpoint.mariohamann.de/wp-json/wp/v2/query?json={"args":{"orderby":"comment_count","order":"ASC"}})
-- **Show categories, ordered by count** `{"query":"WP_Term_Query","args":{"taxonomy":"category","orderby":"count","order":"DESC","hide_empty":false}}`: [Demo using params in URL](https://query-endpoint.mariohamann.de/wp-json/wp/v2/query?json={"query":"WP_Term_Query","args":{"taxonomy":"category","orderby":"count","order":"DESC","hide_empty":false}})
-- **Show page** `{"args":{"post_type":"page"}}`: [Demo using params in URL](https://query-endpoint.mariohamann.de/wp-json/wp/v2/query?json={"args":{"post_type":"page"}})
+- **Return random post** `{"args":{"orderby":"rand","posts_per_page":"1"}}`: [Demo using params in URL (Refresh to see effect)](https://query-endpoint.mariohamann.de/wp-json/wp/v2/query?json={"args":{"orderby":"rand","posts_per_page":"1"}})
+- **Return posts, ordered by comments** `{"args":{"orderby":"comment_count","order":"ASC"}}`: [Demo using params in URL](https://query-endpoint.mariohamann.de/wp-json/wp/v2/query?json={"args":{"orderby":"comment_count","order":"ASC"}})
+- **Return categories, ordered by count** `{"query":"WP_Term_Query","args":{"taxonomy":"category","orderby":"count","order":"DESC","hide_empty":false}}`: [Demo using params in URL](https://query-endpoint.mariohamann.de/wp-json/wp/v2/query?json={"query":"WP_Term_Query","args":{"taxonomy":"category","orderby":"count","order":"DESC","hide_empty":false}})
+- **Return pages** `{"args":{"post_type":"page"}}`: [Demo using params in URL](https://query-endpoint.mariohamann.de/wp-json/wp/v2/query?json={"args":{"post_type":"page"}})
 
 ## Downsides
 
@@ -44,11 +44,6 @@ This query can find EVERY post type and term, as long it is queryable, e. g. `na
 
 - Restrict the request to Gutenberg editor (saying there could be a check in PHP if the request is send by HTTP or by Gutenberg Editor, maybe with nonces?)
 - Restrict it to users with capabilities to requested post types (Example: Someone who can't view a post type couldn't see them in the query block as well?)
-
-At least two alternatives exist:
-
-- We could send the JSON in the body of the GET request. It's definitely not best practice but works in most cases, see [this discussion on Stackoverflow](https://stackoverflow.com/questions/978061/http-get-with-request-body). When I tried it out, it worked but it seems to be depend on server configurations.
-- We could send the JSON in the body of a POST request. Although this is the most robust solution, it feels weird to make a POST rquest to GET content. :)
 
 ## Alternatives considered
 
