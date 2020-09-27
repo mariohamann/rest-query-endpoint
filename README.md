@@ -31,6 +31,8 @@ The Query Block could work as a kind of "JSON-Builder". Its job is to create a w
 
 ## Examples
 
+You can use [https://query-endpoint.mariohamann.de/wp-json/wp/v2/query](https://query-endpoint.mariohamann.de/wp-json/wp/v2/query) to test the POST request, e. g. with the parameters below.
+
 - **Return random post** `{"args":{"orderby":"rand","posts_per_page":"1"}}`: [Demo using params in URL (Refresh to see effect)](https://query-endpoint.mariohamann.de/wp-json/wp/v2/query?json={"args":{"orderby":"rand","posts_per_page":"1"}})
 - **Return posts, ordered by comments** `{"args":{"orderby":"comment_count","order":"ASC"}}`: [Demo using params in URL](https://query-endpoint.mariohamann.de/wp-json/wp/v2/query?json={"args":{"orderby":"comment_count","order":"ASC"}})
 - **Return categories, ordered by count** `{"query":"WP_Term_Query","args":{"taxonomy":"category","orderby":"count","order":"DESC","hide_empty":false}}`: [Demo using params in URL](https://query-endpoint.mariohamann.de/wp-json/wp/v2/query?json={"query":"WP_Term_Query","args":{"taxonomy":"category","orderby":"count","order":"DESC","hide_empty":false}})
